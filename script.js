@@ -24,7 +24,7 @@ const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
 };
 
-var upValue = 180;
+var upValue = 150;
 var downValue = 120;
 
 let detector;
