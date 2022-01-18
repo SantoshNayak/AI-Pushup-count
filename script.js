@@ -2,8 +2,8 @@ let video = document.getElementById("video");
 let model;
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let windowHeight = window.outerHeight * 0.4;
-let windowWidth = window.outerWidth - 100;
+let windowHeight = window.outerHeight * 0.7;
+let windowWidth = window.outerWidth - 400;
 // alert(windowWidth)
 // alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
