@@ -2,8 +2,8 @@ let video = document.getElementById("video");
 let model;
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-let windowHeight = window.outerHeight * 0.6;
-let windowWidth = window.outerWidth - 400;
+let windowHeight = window.outerHeight * 0.4;
+let windowWidth = window.outerWidth - 100;
 // alert(windowWidth)
 // alert(document.getElementsByClassName("test").offsetWidth);
 // alert(window.outerWidth);
@@ -46,18 +46,21 @@ const detectPose = async () => {
   console.log(poses);
 
   // temporary area
-  let right_shoulder = poses[0].keypoints.find(
-    (x) => x.name == "right_shoulder"
-  );
-  let right_wrist = poses[0].keypoints.find((x) => x.name == "right_wrist");
-
-  var a = right_shoulder.x - right_wrist.x;
-var b = right_shoulder.y - right_wrist.y;
-
-var c = Math.sqrt( a*a + b*b );
-
-  [0].keypoints
-  document.getElementById("rightShoulderCoordinaye").innerHTML = c;
+  if (poses.length) {
+    let right_shoulder = poses[0].keypoints.find(
+      (x) => x.name == "right_shoulder"
+    );
+    let right_wrist = poses[0].keypoints.find((x) => x.name == "right_wrist");
+  
+    var a = right_shoulder.x - right_wrist.x;
+  var b = right_shoulder.y - right_wrist.y;
+  
+  var c = Math.sqrt( a*a + b*b );
+  
+    [0].keypoints
+    document.getElementById("rightShoulderCoordinaye").innerHTML = c;
+  }
+  
   //temporary area
 
   if (poses.length) angleCalculation(poses[0].keypoints);
