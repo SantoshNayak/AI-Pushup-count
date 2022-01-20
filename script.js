@@ -58,7 +58,7 @@ const detectPose = async () => {
     let right_knee = poses[0].keypoints.find((x) => x.name == "right_knee");
     let right_ankle = poses[0].keypoints.find((x) => x.name == "right_ankle");
 
-    if (right_shoulder.score > 0.5 && right_wrist.score > 0.5) {
+    if (right_shoulder.score > 0.5 && right_wrist.score > 0.5 && right_knee.score > 0.5&& right_ankle.score > 0.5 ) {
       // var a = right_shoulder.x - right_wrist.x;
       // var b = right_shoulder.y - right_wrist.y;
 
@@ -77,10 +77,14 @@ const detectPose = async () => {
         right_knee.y,
         right_ankle.y
       );
-      document.getElementById("rightShoulderCoordinaye").innerHTML = rightShoulderAndWristDistance;
-      document.getElementById("rightKneeAndAnkle").innerHTML = rightKneeAndAnkleDistance;
+      document.getElementById(
+        "rightShoulderCoordinaye"
+      ).innerHTML = rightShoulderAndWristDistance;
+      document.getElementById(
+        "rightKneeAndAnkle"
+      ).innerHTML = rightKneeAndAnkleDistance;
 
-      if (c > upValue) {
+      if (rightShoulderAndWristDistance > upValue) {
         document.getElementById("positionValue").innerHTML = "UP";
       } else {
         document.getElementById("positionValue").innerHTML = "DOWN";
