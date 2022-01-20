@@ -25,7 +25,7 @@ const detectorConfig = {
 };
 
 var upValue = 150;
-var downValue = 120;
+var downValue = 130;
 
 var threshHoldKneeAnkleDistance = 30;
 let detector;
