@@ -27,6 +27,7 @@ const detectorConfig = {
 var upValue = 150;
 var downValue = 120;
 
+var threshHoldKneeAnkleDistance =30;
 let detector;
 
 const setupCamera = () => {
@@ -84,7 +85,7 @@ const detectPose = async () => {
         "rightKneeAndAnkle"
       ).innerHTML = rightKneeAndAnkleDistance;
 
-      if (rightShoulderAndWristDistance > upValue) {
+      if ((rightShoulderAndWristDistance > upValue )&& (rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance)) {
         document.getElementById("positionValue").innerHTML = "UP";
       } else {
         document.getElementById("positionValue").innerHTML = "DOWN";
