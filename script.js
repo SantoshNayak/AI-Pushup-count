@@ -64,13 +64,21 @@ const detectPose = async () => {
 
       // var c = Math.sqrt(a * a + b * b);
 
-      var c = distanceBetweenTwo(
+      var rightShoulderAndWristDistance = distanceBetweenTwo(
         right_shoulder.x,
         right_wrist.x,
         right_shoulder.y,
         right_wrist.y
       );
-      document.getElementById("rightShoulderCoordinaye").innerHTML = c;
+
+      var rightKneeAndAnkleDistance = distanceBetweenTwo(
+        right_knee.x,
+        right_ankle.x,
+        right_knee.y,
+        right_ankle.y
+      );
+      document.getElementById("rightShoulderCoordinaye").innerHTML = rightShoulderAndWristDistance;
+      document.getElementById("rightKneeAndAnkle").innerHTML = rightKneeAndAnkleDistance;
 
       if (c > upValue) {
         document.getElementById("positionValue").innerHTML = "UP";
