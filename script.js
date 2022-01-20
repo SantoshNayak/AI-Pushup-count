@@ -96,14 +96,18 @@ const detectPose = async () => {
         rightShoulderAndWristDistance > upValue &&
         rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance
       ) {
-        // canCountIncrease = true;
         document.getElementById("positionValue").innerHTML = "UP";
-        // if (canCountIncrease) {
-        //   countValue = countValue + 1;
-        //   document.getElementById("countValue").innerHTML = countValue;
-        // }
+        canCountIncrease = true;
+       
       } else {
         document.getElementById("positionValue").innerHTML = "DOWN";
+
+         if (canCountIncrease) {
+          countValue = countValue + 1;
+          document.getElementById("countValue").innerHTML = countValue;
+          canCountIncrease = false;
+
+        }
       }
     }
   }
