@@ -27,11 +27,11 @@ const detectorConfig = {
 var upValue = 150;
 var downValue = 120;
 
-var threshHoldKneeAnkleDistance =30;
+var threshHoldKneeAnkleDistance = 30;
 let detector;
 
 var canCountIncrease = false;
-var countValue =0;
+var countValue = 0;
 const setupCamera = () => {
   navigator.mediaDevices
     .getUserMedia({
@@ -61,7 +61,12 @@ const detectPose = async () => {
     let right_knee = poses[0].keypoints.find((x) => x.name == "right_knee");
     let right_ankle = poses[0].keypoints.find((x) => x.name == "right_ankle");
 
-    if (right_shoulder.score > 0.5 && right_wrist.score > 0.5 && right_knee.score > 0.5&& right_ankle.score > 0.5 ) {
+    if (
+      right_shoulder.score > 0.5 &&
+      right_wrist.score > 0.5 &&
+      right_knee.score > 0.5 &&
+      right_ankle.score > 0.5
+    ) {
       // var a = right_shoulder.x - right_wrist.x;
       // var b = right_shoulder.y - right_wrist.y;
 
@@ -87,15 +92,16 @@ const detectPose = async () => {
         "rightKneeAndAnkle"
       ).innerHTML = rightKneeAndAnkleDistance;
 
-      if ((rightShoulderAndWristDistance > upValue )&& (rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance)) {
+      if (
+        rightShoulderAndWristDistance > upValue &&
+        rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance
+      ) {
+        // canCountIncrease = true;
         document.getElementById("positionValue").innerHTML = "UP";
-        canCountIncrease=true;
-        if(canCountIncrease){
-          countValue = countValue+1;
-        document.getElementById("countValue").innerHTML = countValue;
-
-          
-        }
+        // if (canCountIncrease) {
+        //   countValue = countValue + 1;
+        //   document.getElementById("countValue").innerHTML = countValue;
+        // }
       } else {
         document.getElementById("positionValue").innerHTML = "DOWN";
       }
