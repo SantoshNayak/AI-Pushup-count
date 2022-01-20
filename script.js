@@ -55,25 +55,29 @@ const detectPose = async () => {
     );
     let right_wrist = poses[0].keypoints.find((x) => x.name == "right_wrist");
 
-    if (right_shoulder.score > 0.5 && right_wrist.score > 0.5) {
+    let right_knee = poses[0].keypoints.find((x) => x.name == "right_knee");
+    let right_ankle = poses[0].keypoints.find((x) => x.name == "right_ankle");
 
-      var a = right_shoulder.x - right_wrist.x;
-      var b = right_shoulder.y - right_wrist.y;
-  
-      var c = Math.sqrt(a * a + b * b);
-  
-      [0].keypoints;
+    if (right_shoulder.score > 0.5 && right_wrist.score > 0.5) {
+      // var a = right_shoulder.x - right_wrist.x;
+      // var b = right_shoulder.y - right_wrist.y;
+
+      // var c = Math.sqrt(a * a + b * b);
+
+      var c = distanceBetweenTwo(
+        right_shoulder.x,
+        right_wrist.x,
+        right_shoulder.y,
+        right_wrist.y
+      );
       document.getElementById("rightShoulderCoordinaye").innerHTML = c;
-  
-      if(c>upValue){
-        document.getElementById("positionValue").innerHTML = 'UP';
-        
-      }else{
-        document.getElementById("positionValue").innerHTML = 'DOWN';
-  
+
+      if (c > upValue) {
+        document.getElementById("positionValue").innerHTML = "UP";
+      } else {
+        document.getElementById("positionValue").innerHTML = "DOWN";
       }
     }
-   
   }
 
   //temporary area
@@ -131,4 +135,11 @@ video.addEventListener("loadeddata", async () => {
 function sendMessagetoFlutter(value) {
   console.log(value);
   // window.CHANNEL_NAME.postMessage('Hello from JS');
+}
+
+function distanceBetweenTwo(x2, x1, y2, y1) {
+  var a = x2 - x1;
+  var b = y2 - y1;
+
+  return Math.sqrt(a * a + b * b);
 }
