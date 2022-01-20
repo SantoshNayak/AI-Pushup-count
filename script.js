@@ -30,6 +30,8 @@ var downValue = 120;
 var threshHoldKneeAnkleDistance =30;
 let detector;
 
+var canCountIncrease = false;
+var countValue =0;
 const setupCamera = () => {
   navigator.mediaDevices
     .getUserMedia({
@@ -47,7 +49,7 @@ const detectPose = async () => {
   const poses = await detector.estimatePoses(document.querySelector("video"));
 
   // const predictions = await model.estimateHands(document.querySelector("video"));
-  console.log(poses);
+  // console.log(poses);
 
   // temporary area
   if (poses.length) {
@@ -87,6 +89,13 @@ const detectPose = async () => {
 
       if ((rightShoulderAndWristDistance > upValue )&& (rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance)) {
         document.getElementById("positionValue").innerHTML = "UP";
+        canCountIncrease=true;
+        if(canCountIncrease){
+          countValue = countValue+1;
+        document.getElementById("countValue").innerHTML = countValue;
+
+          
+        }
       } else {
         document.getElementById("positionValue").innerHTML = "DOWN";
       }
