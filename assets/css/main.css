@@ -13,6 +13,11 @@ canvas {
   color: #f58220;
   font-size: 20px;
 }
+#countValue{
+  color: #f58220;
+  font-size: 40px;
+
+}
 .test {
   display: block;
   margin: auto;

@@ -88,9 +88,9 @@ const detectPose = async () => {
       document.getElementById(
         "rightShoulderCoordinaye"
       ).innerHTML = rightShoulderAndWristDistance;
-      document.getElementById(
-        "rightKneeAndAnkle"
-      ).innerHTML = rightKneeAndAnkleDistance;
+      // document.getElementById(
+      //   "rightKneeAndAnkle"
+      // ).innerHTML = rightKneeAndAnkleDistance;
 
       if (
         rightShoulderAndWristDistance > upValue &&
@@ -161,6 +161,12 @@ video.addEventListener("loadeddata", async () => {
 
   document.getElementById("loadingText").innerHTML =
     "Please stand in camera so that it can see full body";
+
+    document.getElementById("upscoreThreshold").innerHTML =upValue;
+    document.getElementById("downscoreThreshold").innerHTML =downValue;
+
+
+    
   setInterval(detectPose, 30);
 });
 
