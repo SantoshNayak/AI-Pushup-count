@@ -99,7 +99,7 @@ const detectPose = async () => {
         document.getElementById("positionValue").innerHTML = "UP";
         canCountIncrease = true;
        
-      } else {
+      } else if(rightShoulderAndWristDistance < downValue) {
         document.getElementById("positionValue").innerHTML = "DOWN";
 
          if (canCountIncrease) {
