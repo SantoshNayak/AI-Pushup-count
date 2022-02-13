@@ -1,4 +1,5 @@
-# TF-Bicep-curl-count
+# AI-Pushup-count
+
 
 Note:- Please move to a area where your whole body is visible so that we can predict perfectly
 
