@@ -144,8 +144,13 @@ video.addEventListener("loadeddata", async () => {
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  targetCount = urlParams.get('goal')
+  if(urlParams.get('goal')){
 
+    targetCount = urlParams.get('goal')
+  }
+  document.getElementById("targetCount").innerHTML =targetCount;
+
+  
   console.log('queryString',targetCount);
 
   canvas.width = document.getElementById("video").offsetWidth;
