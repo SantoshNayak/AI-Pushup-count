@@ -4,22 +4,8 @@ let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let windowHeight = window.outerHeight * 0.4;
 let windowWidth = window.outerWidth - 100;
-// alert(windowWidth)
-// alert(document.getElementsByClassName("test").offsetWidth);
-// alert(window.outerWidth);
 
-// var thresholdAngle = 130;
-
-// var rightHandCount = 0;
-// var canBeProceedForRightCount = true;
-// var hasRightCountIncreasedOnce = false;
-
-// var leftHandCount = 0;
-// var canBeProceedForLeftCount = true;
-// var hasLeftCountIncreasedOnce = false;
-
-// var isGoalAchieved = false;
-// var goalCount = 5;
+var targetCount = 10;
 const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
 };
@@ -40,7 +26,7 @@ const setupCamera = () => {
     })
     .then((stream) => {
       video.srcObject = stream;
-      // document.getElementById("goalCount").innerHTML = goalCount;
+      // document.getElementById("targetCount").innerHTML = targetCount;
     });
 };
 
@@ -104,6 +90,14 @@ const detectPose = async () => {
         if (canCountIncrease) {
           countValue = countValue + 1;
           document.getElementById("countValue").innerHTML = countValue;
+
+          if(countValue >= targetCount){
+            //target achieved
+            console.log(true);
+            
+            document.getElementById("targetAchieve").innerHTML = "🎂 Goal Achieved 🎂 ";
+
+          }
           canCountIncrease = false;
         }
       }
@@ -148,11 +142,16 @@ setupCamera();
 video.addEventListener("loadeddata", async () => {
   // document.getElementById("video").offsetWidth, document.getElementById("video").offsetHeight
 
-  // const queryString = window.location.search;
-  // const urlParams = new URLSearchParams(queryString);
-  // const product = urlParams.get('product')
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  if(urlParams.get('goal')){
 
-  console.log('queryString',product);
+    targetCount = urlParams.get('goal')
+  }
+  document.getElementById("targetCount").innerHTML =targetCount;
+
+  
+  console.log('queryString',targetCount);
 
   canvas.width = document.getElementById("video").offsetWidth;
   canvas.height = document.getElementById("video").offsetHeight;
