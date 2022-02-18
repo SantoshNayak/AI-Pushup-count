@@ -71,13 +71,10 @@ const detectPose = async () => {
         right_knee.y,
         right_ankle.y
       );
-      document.getElementById(
-        "rightShoulderCoordinaye"
-      ).innerHTML = rightShoulderAndWristDistance;
       // document.getElementById(
-      //   "rightKneeAndAnkle"
-      // ).innerHTML = rightKneeAndAnkleDistance;
-
+      //   "rightShoulderCoordinaye"
+      // ).innerHTML = rightShoulderAndWristDistance;
+ 
       if (
         rightShoulderAndWristDistance > upValue &&
         rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance
@@ -91,12 +88,12 @@ const detectPose = async () => {
           countValue = countValue + 1;
           document.getElementById("countValue").innerHTML = countValue;
 
-          if(countValue >= targetCount){
+          if (countValue >= targetCount) {
             //target achieved
             console.log(true);
-            
-            document.getElementById("targetAchieve").innerHTML = "🎂 Goal Achieved 🎂 ";
 
+            document.getElementById("targetAchieve").innerHTML =
+              "🎂 Goal Achieved 🎂 ";
           }
           canCountIncrease = false;
         }
@@ -104,35 +101,17 @@ const detectPose = async () => {
     }
   }
 
-  //temporary area
-
-  // if (poses.length) angleCalculation(poses[0].keypoints);
-  // canvas.width = windowWidth;
-  // canvas.height = windowHeight;
   ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
 
   poses.forEach((eachPose) => {
     ctx.beginPath();
     ctx.lineWidth = "4";
     ctx.strokeStyle = "blue";
-    //  ctx.rect(
-    //   eachPose.keypoints.topLeft[0],
-    //   eachPose.keypoints.topLeft[1],
-    //   eachPose.keypoints.bottomRight[0] -eachPose.keypoints.topLeft[0],
-    //   eachPose.keypoints.bottomRight[1] -eachPose.keypoints.topLeft[1]
-
-    //  )
 
     ctx.fillStyle = "red";
     eachPose.keypoints.forEach((key, index) => {
       ctx.fillRect(key.x, key.y, 5, 5);
-
-      // if(index == 0){
-      //   ctx.moveTo(0, 0);
-      // }
-      // ctx.lineTo(key.x, key.y);
     });
-    // ctx.lineTo(1,5,5,100,25,20);
 
     ctx.stroke();
   });
@@ -144,14 +123,12 @@ video.addEventListener("loadeddata", async () => {
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  if(urlParams.get('goal')){
-
-    targetCount = urlParams.get('goal')
+  if (urlParams.get("goal")) {
+    targetCount = urlParams.get("goal");
   }
-  document.getElementById("targetCount").innerHTML =targetCount;
+  document.getElementById("targetCount").innerHTML = targetCount;
 
-  
-  console.log('queryString',targetCount);
+  console.log("queryString", targetCount);
 
   canvas.width = document.getElementById("video").offsetWidth;
   canvas.height = document.getElementById("video").offsetHeight;
@@ -163,10 +140,10 @@ video.addEventListener("loadeddata", async () => {
   );
 
   document.getElementById("loadingText").innerHTML =
-    "Please stand in camera so that it can see full body";
+    "Please stand in front of camera";
 
-  document.getElementById("upscoreThreshold").innerHTML = upValue;
-  document.getElementById("downscoreThreshold").innerHTML = downValue;
+  // document.getElementById("upscoreThreshold").innerHTML = upValue;
+  // document.getElementById("downscoreThreshold").innerHTML = downValue;
 
   setInterval(detectPose, 30);
 });
