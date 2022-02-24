@@ -1,7 +1,7 @@
 let video = document.getElementById("video");
 let model;
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
+// let canvas = document.getElementById("canvas");
+// let ctx = canvas.getContext("2d");
 let windowHeight = window.outerHeight * 0.4;
 let windowWidth = window.outerWidth - 100;
 
@@ -101,20 +101,20 @@ const detectPose = async () => {
     }
   }
 
-  ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
+  // ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
 
-  poses.forEach((eachPose) => {
-    ctx.beginPath();
-    ctx.lineWidth = "4";
-    ctx.strokeStyle = "blue";
+  // poses.forEach((eachPose) => {
+  //   ctx.beginPath();
+  //   ctx.lineWidth = "4";
+  //   ctx.strokeStyle = "blue";
 
-    ctx.fillStyle = "red";
-    eachPose.keypoints.forEach((key, index) => {
-      ctx.fillRect(key.x, key.y, 5, 5);
-    });
+  //   ctx.fillStyle = "red";
+  //   eachPose.keypoints.forEach((key, index) => {
+  //     ctx.fillRect(key.x, key.y, 5, 5);
+  //   });
 
-    ctx.stroke();
-  });
+  //   ctx.stroke();
+  // });
 };
 
 setupCamera();
@@ -128,12 +128,14 @@ video.addEventListener("loadeddata", async () => {
   }
   document.getElementById("targetCount").innerHTML = targetCount;
 
-  console.log("queryString", targetCount);
+  // console.log("queryString", targetCount);
 
-  canvas.width = document.getElementById("video").offsetWidth;
-  canvas.height = document.getElementById("video").offsetHeight;
-  canvas.setAttribute("width", windowWidth);
-  canvas.setAttribute("height", windowHeight);
+  // canvas.width = document.getElementById("video").offsetWidth;
+  // canvas.height = document.getElementById("video").offsetHeight;
+  // canvas.setAttribute("width", windowWidth);
+  // canvas.setAttribute("height", windowHeight);
+
+
   detector = await poseDetection.createDetector(
     poseDetection.SupportedModels.MoveNet,
     detectorConfig
@@ -142,8 +144,7 @@ video.addEventListener("loadeddata", async () => {
   document.getElementById("loadingText").innerHTML =
     "Please stand in front of camera";
 
-  // document.getElementById("upscoreThreshold").innerHTML = upValue;
-  // document.getElementById("downscoreThreshold").innerHTML = downValue;
+
 
   setInterval(detectPose, 30);
 });
