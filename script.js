@@ -10,6 +10,18 @@ const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
 };
 
+
+
+// Hacks for Mobile Safari
+video.setAttribute("playsinline", true);
+video.setAttribute("controls", true);
+setTimeout(() => {
+    video.removeAttribute("controls");
+});
+
+
+
+
 var upValue = 150;
 var downValue = 130;
 
