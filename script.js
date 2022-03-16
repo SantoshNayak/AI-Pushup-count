@@ -10,25 +10,23 @@ const detectorConfig = {
   modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING,
 };
 
-
-
 // Hacks for Mobile Safari
 video.setAttribute("playsinline", true);
 video.setAttribute("controls", true);
 setTimeout(() => {
-    video.removeAttribute("controls");
+  video.removeAttribute("controls");
 });
-
-
-
 
 var upValue = 150;
 var downValue = 130;
 
+var upAnguleValue = 180;
+var downAnguleValue = 120;
+
 var threshHoldKneeAnkleDistance = 30;
 let detector;
 
-var canCountIncrease = false;
+var canCountIncrease = true;
 var countValue = 0;
 const setupCamera = () => {
   navigator.mediaDevices
@@ -65,68 +63,48 @@ const detectPose = async () => {
       right_wrist.score > 0.5 &&
       right_knee.score > 0.5 &&
       right_ankle.score > 0.5 &&
-      right_elbow.score > 0.5 
+      right_elbow.score > 0.5
     ) {
-    
+      angleBetweenTwo(right_wrist, right_elbow, right_shoulder);
+      // var rightShoulderAndWristDistance = distanceBetweenTwo(
+      //   right_shoulder.x,
+      //   right_wrist.x,
+      //   right_shoulder.y,
+      //   right_wrist.y
+      // );
 
-      angleBetweenTwo(right_wrist,right_elbow, right_shoulder)
-      var rightShoulderAndWristDistance = distanceBetweenTwo(
-        right_shoulder.x,
-        right_wrist.x,
-        right_shoulder.y,
-        right_wrist.y
-      );
+      // var rightKneeAndAnkleDistance = distanceBetweenTwo(
+      //   right_knee.x,
+      //   right_ankle.x,
+      //   right_knee.y,
+      //   right_ankle.y
+      // );
 
-      var rightKneeAndAnkleDistance = distanceBetweenTwo(
-        right_knee.x,
-        right_ankle.x,
-        right_knee.y,
-        right_ankle.y
-      );
-      // document.getElementById(
-      //   "rightShoulderCoordinaye"
-      // ).innerHTML = rightShoulderAndWristDistance;
- 
-      if (
-        rightShoulderAndWristDistance > upValue &&
-        rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance
-      ) {
-        document.getElementById("positionValue").innerHTML = "UP";
-        canCountIncrease = true;
-      } else if (rightShoulderAndWristDistance < downValue) {
-        document.getElementById("positionValue").innerHTML = "DOWN";
+      // if (
+      //   rightShoulderAndWristDistance > upValue &&
+      //   rightKneeAndAnkleDistance < threshHoldKneeAnkleDistance
+      // ) {
+      //   document.getElementById("positionValue").innerHTML = "UP";
+      //   canCountIncrease = true;
+      // } else if (rightShoulderAndWristDistance < downValue) {
+      //   document.getElementById("positionValue").innerHTML = "DOWN";
 
-        if (canCountIncrease) {
-          countValue = countValue + 1;
-          document.getElementById("countValue").innerHTML = countValue;
+      //   if (canCountIncrease) {
+      //     countValue = countValue + 1;
+      //     document.getElementById("countValue").innerHTML = countValue;
 
-          if (countValue >= targetCount) {
-            //target achieved
-            console.log(true);
+      //     if (countValue >= targetCount) {
+      //       //target achieved
+      //       console.log(true);
 
-            document.getElementById("targetAchieve").innerHTML =
-              "🎂 Goal Achieved 🎂 ";
-          }
-          canCountIncrease = false;
-        }
-      }
+      //       document.getElementById("targetAchieve").innerHTML =
+      //         "🎂 Goal Achieved 🎂 ";
+      //     }
+      //     canCountIncrease = false;
+      //   }
+      // }
     }
   }
-
-  // ctx.drawImage(video, 0, 0, windowWidth, windowHeight);
-
-  // poses.forEach((eachPose) => {
-  //   ctx.beginPath();
-  //   ctx.lineWidth = "4";
-  //   ctx.strokeStyle = "blue";
-
-  //   ctx.fillStyle = "red";
-  //   eachPose.keypoints.forEach((key, index) => {
-  //     ctx.fillRect(key.x, key.y, 5, 5);
-  //   });
-
-  //   ctx.stroke();
-  // });
 };
 
 setupCamera();
@@ -147,7 +125,6 @@ video.addEventListener("loadeddata", async () => {
   // canvas.setAttribute("width", windowWidth);
   // canvas.setAttribute("height", windowHeight);
 
-
   detector = await poseDetection.createDetector(
     poseDetection.SupportedModels.MoveNet,
     detectorConfig
@@ -155,8 +132,6 @@ video.addEventListener("loadeddata", async () => {
 
   document.getElementById("loadingText").innerHTML =
     "Please stand in front of camera";
-
-
 
   setInterval(detectPose, 30);
 });
@@ -173,12 +148,26 @@ function distanceBetweenTwo(x2, x1, y2, y1) {
   return Math.sqrt(a * a + b * b);
 }
 
-
-function angleBetweenTwo(wrist,elbow, shoulder){
-
-  var radian =  Math.atan2(wrist.y - elbow.y, wrist.x - elbow.x) -  Math.atan2(shoulder.y - elbow.y,shoulder.x - elbow.x)
+function angleBetweenTwo(wrist, elbow, shoulder) {
+  var radian =
+    Math.atan2(wrist.y - elbow.y, wrist.x - elbow.x) -
+    Math.atan2(shoulder.y - elbow.y, shoulder.x - elbow.x);
   var pi = Math.PI;
   let angle = radian * (180 / pi);
-  document.getElementById("angle").innerHTML =angle;
-  
+  document.getElementById("angle").innerHTML = angle;
+
+  // more than 180
+  // less than 120
+
+  if (angle < downAnguleValue && canCountIncrease && handWasStraightOnce) {
+    countValue = countValue + 1;
+    document.getElementById("countValue").innerHTML = countValue;
+    canCountIncrease = false
+  }
+
+  if(angle > upAnguleValue){
+    handWasStraightOnce =true
+    canCountIncrease =true
+  }
 }
+var handWasStraightOnce = false
