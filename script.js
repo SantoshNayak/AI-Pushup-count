@@ -58,18 +58,18 @@ const detectPose = async () => {
 
     let right_knee = poses[0].keypoints.find((x) => x.name == "right_knee");
     let right_ankle = poses[0].keypoints.find((x) => x.name == "right_ankle");
+    let right_elbow = poses[0].keypoints.find((x) => x.name == "right_elbow");
 
     if (
       right_shoulder.score > 0.5 &&
       right_wrist.score > 0.5 &&
       right_knee.score > 0.5 &&
-      right_ankle.score > 0.5
+      right_ankle.score > 0.5 &&
+      right_elbow.score > 0.5 
     ) {
-      // var a = right_shoulder.x - right_wrist.x;
-      // var b = right_shoulder.y - right_wrist.y;
+    
 
-      // var c = Math.sqrt(a * a + b * b);
-
+      angleBetweenTwo(right_wrist,right_elbow, right_shoulder)
       var rightShoulderAndWristDistance = distanceBetweenTwo(
         right_shoulder.x,
         right_wrist.x,
@@ -171,4 +171,14 @@ function distanceBetweenTwo(x2, x1, y2, y1) {
   var b = y2 - y1;
 
   return Math.sqrt(a * a + b * b);
+}
+
+
+function angleBetweenTwo(wrist,elbow, shoulder){
+
+  var radian =  Math.atan2(wrist.y - elbow.y, wrist.x - elbow.x) -  Math.atan2(shoulder.y - elbow.y,shoulder.x - elbow.x)
+  var pi = Math.PI;
+  let angle = radian * (180 / pi);
+  document.getElementById("angle").innerHTML =angle;
+  
 }
