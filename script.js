@@ -21,7 +21,7 @@ var upValue = 150;
 var downValue = 130;
 
 var upAnguleValue = 180;
-var downAnguleValue = 120;
+var downAnguleValue = 145;
 
 var threshHoldKneeAnkleDistance = 30;
 let detector;
