@@ -65,6 +65,8 @@ const detectPose = async () => {
       right_ankle.score > 0.5 &&
       right_elbow.score > 0.5
     ) {
+      document.getElementById("video").style.borderColor = "green";
+
       angleBetweenTwo(right_wrist, right_elbow, right_shoulder);
       // var rightShoulderAndWristDistance = distanceBetweenTwo(
       //   right_shoulder.x,
@@ -134,6 +136,8 @@ video.addEventListener("loadeddata", async () => {
     "Please stand in front of camera";
 
   setInterval(detectPose, 30);
+  on();
+  document.getElementById("overlaytext").innerHTML = "Detecting";
 });
 
 function sendMessagetoFlutter(value) {
@@ -154,7 +158,7 @@ function angleBetweenTwo(wrist, elbow, shoulder) {
     Math.atan2(shoulder.y - elbow.y, shoulder.x - elbow.x);
   var pi = Math.PI;
   let angle = radian * (180 / pi);
-  document.getElementById("angle").innerHTML = angle;
+  // document.getElementById("angle").innerHTML = angle;
 
   // more than 180
   // less than 120
@@ -162,12 +166,25 @@ function angleBetweenTwo(wrist, elbow, shoulder) {
   if (angle < downAnguleValue && canCountIncrease && handWasStraightOnce) {
     countValue = countValue + 1;
     document.getElementById("countValue").innerHTML = countValue;
-    canCountIncrease = false
+
+    if (countValue >= targetCount) {
+      sendMessagetoFlutter(true);
+    }
+
+    canCountIncrease = false;
   }
 
-  if(angle > upAnguleValue){
-    handWasStraightOnce =true
-    canCountIncrease =true
+  if (angle > upAnguleValue) {
+    handWasStraightOnce = true;
+    canCountIncrease = true;
   }
 }
-var handWasStraightOnce = false
+var handWasStraightOnce = false;
+
+function on() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
