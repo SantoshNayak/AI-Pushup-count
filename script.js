@@ -67,6 +67,7 @@ const detectPose = async () => {
     ) {
       document.getElementById("video").style.borderColor = "green";
 
+      off()
       angleBetweenTwo(right_wrist, right_elbow, right_shoulder);
       // var rightShoulderAndWristDistance = distanceBetweenTwo(
       //   right_shoulder.x,
